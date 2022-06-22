@@ -34,10 +34,25 @@ async def read_items(q: list= Query(default=None),
                         title="Query string", 
                         description="Query string for the items to search in the database that have a good match",
                         alias = "item-query",
-                        deprecated=True,):
+                        deprecated=True,
+                        ):
 #async def read_items(q: list= Query(default=[])): # 리턴값 =  {q: []}
     results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
     if q:
         results.update({"q": q})
     return results
 #title 과 description alias, deprecated는 docs의  보충설명에 관한 내용
+
+
+
+@app.get("/items/")
+async def read_items(
+    hidden_query: str | None = Query(default=None, include_in_schema=False)
+):
+    if hidden_query:
+        return {"hidden_query": hidden_query}
+    else:
+        return {"hidden_query": "Not found"}
+
+
+#hidden query는 docs에 나오지않게 해주는 역할

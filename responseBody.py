@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel # 클래스의 모델 정의
 from enum import Enum #enum타입 선언
 from typing import Union, Optional
+
 class Item(BaseModel):
     name :str
     description : Union[str,None] = None
