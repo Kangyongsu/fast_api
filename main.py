@@ -1,8 +1,20 @@
 from fastapi import FastAPI
 from enum import Enum #enum타입 선언
 from typing import Union ,Optional
+from models import auto_complete
+from mongoengine import connect
+import json
+
+connect(db = 'auto_complete', host='localhost', port=27017)
 
 app = FastAPI()
+
+@app.get("/test")
+def get_test():
+    autoComplete = auto_complete.objects().to_json()
+    list_ = json.loads(autoComplete)
+
+    return {"auto_complete":list_}
 
 class enumTest(str,Enum):
     name1= "맥크리"
